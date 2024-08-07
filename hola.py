@@ -1,8 +1,4 @@
-print("hola mundo")
+def bienvenida(nombre, mensaje):
+  print(f"Hola {nombre} {mensaje}")
 
-def informacion(nombre, puesto = "Desconocido"):
-  print( f"soy {nombre} y soy {puesto}")
-
-informacion("Pedro", "programador")
-informacion("Juan", "catador de glandes")
-informacion("Lucas", "entrenador de canarios")
+bienvenida("Tito", "Bienvenido al curso!!!")
