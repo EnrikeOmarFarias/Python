@@ -161,4 +161,6 @@ if numero % 2 == 0:
   print(f"el numero es par")
 else:
   print(f"el numero es impar")
-  
+
+# while y for
+
