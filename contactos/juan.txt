@@ -1,0 +1,3 @@
+Nombre: juan
+Telefono: 54565
+Categoria: cliente
