@@ -38,10 +38,21 @@ def app():
       buscar_contacto()
       preguntar = False
     elif opcion == 5:
-      print("Eliminar contacto")
+      eliminar_contacto()
       preguntar = False
     else:
       print("Opcion no valida")
+
+def eliminar_contacto():
+  nombre = input("Que contacto desea elminar: \r\n")
+
+  try:
+    os.remove(CARPETA + nombre + EXTENSION)
+    print("\r\n Eliminado correctamente")
+  except:
+    print("No existe ese contacto")
+  #Reiniciar app
+  app()
 
 def buscar_contacto():
   nombre = input("Seleccione el contacto que desea buscar: \r\n")
