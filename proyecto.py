@@ -29,7 +29,7 @@ def app():
       agregar_contacto()
       preguntar  = False
     elif opcion == 2:
-      print("Editar contacto")
+      editar_contacto()
       preguntar = False
     elif opcion == 3:
       print("Ver contacto")
@@ -44,26 +44,71 @@ def app():
       print("Opcion no valida")
 
 
-def agregar_contacto():
-  print("Escribe los datos para agregar el nuevo Contacto")
-  nombre_contacto = input("Nombre del contacto:\r\n")
+def editar_contacto():
+  print("Escribe el nombre del contacto a editar")
+  nombre_anterior = input("Nombre del contacto que desea editar: \r\n")
 
-  with open(CARPETA + nombre_contacto + EXTENSION, "w") as archivo:
-  
-  # Resto de los campos
-    telefono_contacto = input("Agrega el telefono: \r\n")
-    categoria_contacto = input("Categoria Contacto: \r\n")
+  #Revisar si el archivo ya existe antes de editarlo
+  existe = existe_contacto(nombre_anterior)
 
-  #Instanciar la clase
-    contacto = Contactos(nombre_contacto, telefono_contacto, categoria_contacto)
+  if existe:
+    with open(CARPETA + nombre_anterior + EXTENSION, "w") as archivo:
 
-  #Escribir en el archivo
+      # Resto de los campos
+      nombre_contacto = input("Agrega el nuevo nombre: \r\n")
+      telefono_contacto = input("Agrega el nuevo telefono: \r\n")
+      categoria_contacto = input("agrega la nueva categoria : \r\n")
+
+      #Instanciar
+    contacto= Contactos(nombre_contacto, telefono_contacto, categoria_contacto)
+      
+      #Escribir en el archivo
     archivo.write("Nombre: " + contacto.nombre + "\r\n")
     archivo.write("Telefono: " + contacto.telefono + "\r\n")
     archivo.write("Categoria: " + contacto.categoria + "\r\n")
 
-# Mostrar mensaje de exito
-  print("\r\n Contacto creado Correctamente \r\n")
+    #Renombrar el archivo
+    os.rename(CARPETA + nombre_anterior + EXTENSION, CARPETA + nombre_contacto + EXTENSION)
+
+    #Mostrar mensaje de exito
+    print("\r\n Contacto editado Correctamente \r\n")
+
+  else:
+    print("Ese contacto no existe")
+
+  #Reiniciar la aplicacion
+  app()
+
+def agregar_contacto():
+  print("Escribe los datos para agregar el nuevo Contacto")
+  nombre_contacto = input("Nombre del contacto:\r\n")
+
+  #Revisar si el archivo ya existe antes de crearlo
+
+  existe = existe_contacto(nombre_contacto)
+
+  if not existe:
+    with open(CARPETA + nombre_contacto + EXTENSION, "w") as archivo:
+    
+    # Resto de los campos
+      telefono_contacto = input("Agrega el telefono: \r\n")
+      categoria_contacto = input("Categoria Contacto: \r\n")
+
+    #Instanciar la clase
+      contacto = Contactos(nombre_contacto, telefono_contacto, categoria_contacto)
+
+    #Escribir en el archivo
+      archivo.write("Nombre: " + contacto.nombre + "\r\n")
+      archivo.write("Telefono: " + contacto.telefono + "\r\n")
+      archivo.write("Categoria: " + contacto.categoria + "\r\n")
+
+    # Mostrar mensaje de exito
+    print("\r\n Contacto creado Correctamente \r\n")
+  else:
+    print("Ese contacto ya existe")
+
+  # Reiniciar la app
+  app()
 
 def mostrar_menu():
     print("Seleccione del menu lo que desee hacer:")
@@ -79,5 +124,7 @@ def crear_directorio():
   else:
     print("La carpeta ya existe")
 
-  
+def existe_contacto(nombre):
+  return os.path.isfile(CARPETA + nombre + EXTENSION)
+
 app()
